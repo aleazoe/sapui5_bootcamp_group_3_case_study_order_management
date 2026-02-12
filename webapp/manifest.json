@@ -1,0 +1,102 @@
+{
+  "_version": "1.81.0",
+  "sap.app": {
+    "id": "com.training.group3ordermanagement",
+    "type": "application",
+    "i18n": "i18n/i18n.properties",
+    "applicationVersion": {
+      "version": "0.0.1"
+    },
+    "title": "{{appTitle}}",
+    "description": "{{appDescription}}",
+    "resources": "resources.json",
+    "sourceTemplate": {
+      "id": "@sap/generator-fiori:basic",
+      "version": "1.20.2",
+      "toolsId": "e26e23f3-6fb3-4025-a7eb-f4a8fde3dd52"
+    }
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "icons": {
+      "icon": "",
+      "favIcon": "",
+      "phone": "",
+      "phone@2": "",
+      "tablet": "",
+      "tablet@2": ""
+    },
+    "deviceTypes": {
+      "desktop": true,
+      "tablet": true,
+      "phone": true
+    }
+  },
+  "sap.ui5": {
+    "flexEnabled": true,
+    "dependencies": {
+      "minUI5Version": "1.144.1",
+      "libs": {
+        "sap.m": {},
+        "sap.ui.core": {}
+      }
+    },
+    "contentDensities": {
+      "compact": true,
+      "cozy": true
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": {
+          "bundleName": "com.training.group3ordermanagement.i18n.i18n"
+        }
+      }
+    },
+    "resources": {
+      "css": [
+        {
+          "uri": "css/style.css"
+        }
+      ]
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "controlAggregation": "pages",
+        "controlId": "app",
+        "transition": "slide",
+        "type": "View",
+        "viewType": "XML",
+        "path": "com.training.group3ordermanagement.view",
+        "async": true,
+        "viewPath": "com.training.group3ordermanagement.view"
+      },
+      "routes": [
+        {
+          "name": "RoutemainView",
+          "pattern": ":?query:",
+          "target": [
+            "TargetmainView"
+          ]
+        }
+      ],
+      "targets": {
+        "TargetmainView": {
+          "id": "mainView",
+          "name": "mainView"
+        }
+      }
+    },
+    "rootView": {
+      "viewName": "com.training.group3ordermanagement.view.App",
+      "type": "XML",
+      "id": "App",
+      "async": true
+    }
+  },
+  "sap.cloud": {
+    "public": true,
+    "service": "comtraininggroup3ordermanagement"
+  }
+}
