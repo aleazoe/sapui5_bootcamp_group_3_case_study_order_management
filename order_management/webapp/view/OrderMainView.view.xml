@@ -1,6 +1,41 @@
-<mvc:View controllerName="sapips.training.ordermanagement.controller.OrderMainView"
+<!-- <mvc:View controllerName="sapips.training.ordermanagement.controller.OrderMainView"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m">
     <Page id="page" title="{i18n>title}">
+    </Page>
+</mvc:View> -->
+<mvc:View controllerName="sapips.training.ordermanagement.controller.OrderMainView"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:form="sap.ui.layout.form"
+    xmlns="sap.m">
+    <Page id="page" title="{i18n>title}">
+      <Panel id="panelOrders" headerText="Orders">
+      <List id="listOrders" 
+            items="{/Orders}" 
+            mode="SingleSelectMaster">
+        <StandardListItem 
+          id = "listItem"
+          title = "{OrderID} | {CreationDate} | {ReceivingPlantID} | {DeliveringPlantID} | {Status}" />
+      </List>
+      </Panel>
+      <Panel id="panelOrderDetails" headerText="Order Details">
+      <List id="listOrderDetails" 
+            items="{/OrderDetails}" 
+            mode="SingleSelectMaster">
+        <StandardListItem 
+          id = "listItemDet"
+          title = "{OrderID} | {ProductID} | {Quantity} | {UnitPrice}" />
+      </List>
+      </Panel>
+      <Panel id="panelPlants" headerText="Plant Description">
+      <List id="listPlantDesc" 
+            items="{/Plants}" 
+            mode="SingleSelectMaster">
+        <StandardListItem 
+          id = "listItemPlant"
+          title = "{PlantID} | {PlantName}" />
+      </List>
+      </Panel>
+      
     </Page>
 </mvc:View>
