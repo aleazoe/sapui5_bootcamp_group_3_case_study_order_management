@@ -1,41 +1,78 @@
-<!-- <mvc:View controllerName="sapips.training.ordermanagement.controller.OrderMainView"
+<mvc:View
+    controllerName="sapips.training.ordermanagement.controller.OrderMainView"
     xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m">
-    <Page id="page" title="{i18n>title}">
-    </Page>
-</mvc:View> -->
-<mvc:View controllerName="sapips.training.ordermanagement.controller.OrderMainView"
-    xmlns:mvc="sap.ui.core.mvc"
-    xmlns:form="sap.ui.layout.form"
-    xmlns="sap.m">
-    <Page id="page" title="{i18n>title}">
-      <Panel id="panelOrders" headerText="Orders">
-      <List id="listOrders" 
-            items="{/Orders}" 
-            mode="SingleSelectMaster">
-        <StandardListItem 
-          id = "listItem"
-          title = "{OrderID} | {CreationDate} | {ReceivingPlantID} | {DeliveringPlantID} | {Status}" />
-      </List>
-      </Panel>
-      <Panel id="panelOrderDetails" headerText="Order Details">
-      <List id="listOrderDetails" 
-            items="{/OrderDetails}" 
-            mode="SingleSelectMaster">
-        <StandardListItem 
-          id = "listItemDet"
-          title = "{OrderID} | {ProductID} | {Quantity} | {UnitPrice}" />
-      </List>
-      </Panel>
-      <Panel id="panelPlants" headerText="Plant Description">
-      <List id="listPlantDesc" 
-            items="{/Plants}" 
-            mode="SingleSelectMaster">
-        <StandardListItem 
-          id = "listItemPlant"
-          title = "{PlantID} | {PlantName}" />
-      </List>
-      </Panel>
-      
-    </Page>
+    xmlns:f="sap.f"
+    xmlns="sap.m"
+>
+    <!-- <Page id="page" title="{i18n>title}"> -->
+    <f:DynamicPage
+        id="orderDynamicPageId"
+        preserveHeaderStateOnScroll="true"
+        headerExpanded="true"
+        showFooter="false"
+        fitContent="true"
+    >
+        <!-- Dynamic Page Title -->
+        <f:title>
+            <f:DynamicPageTitle id="orderPageTitle">
+                <f:heading>
+                    <Title
+                        id="orderPageTitleText"
+                        text="{i18n>title}"
+                    />
+                </f:heading>
+            </f:DynamicPageTitle>
+        </f:title>
+
+        <f:content>
+            <Table
+                id="orderTable"
+                items="{
+                path: '/Orders',
+                parameters: {
+                expand: 'ToReceivingPlant,ToDeliveringPlant'
+                }
+            }"
+            >
+                <headerToolbar>
+                    <OverflowToolbar id="otbTableTitle">
+                        <Title id="tableTitleId" text="Orders" level="H2" />
+                        <ToolbarSpacer />
+                        <Button id="createButton" icon="sap-icon://add" press="onPressCreateBtn" />
+                        <Button id="deleteButton" icon="sap-icon://delete" press="onPressDeleteBtn" />
+                    </OverflowToolbar>
+                </headerToolbar>
+                <columns>
+                    <Column id="orderIDCol">
+                        <Text id="orderIDColText" text="Order Number" />
+                    </Column>
+                    <Column id="creationDateCol">
+                        <Text id="creationDateColText" text="Creation Date" />
+                    </Column>
+                    <Column id="receivingPlantCol">
+                        <Text id="receivingPlantColText" text="Receiving Plant" />
+                    </Column>
+                    <Column id="deliveringCol">
+                        <Text id="deliveringColText" text="Delivering Plant" />
+                    </Column>
+                    <Column id="statusCol">
+                        <Text id="statusColText" text="Status" />
+                    </Column>
+                </columns>
+
+                <items>
+                    <ColumnListItem id="orderItems">
+                        <cells>
+                            <Text id="orderIdVal" text="{OrderID}" />
+                            <Text id="creationDateVal" text="{CreationDate}" />
+                            <Text id="receivingPlantVal" text="{ReceivingPlantID} - {ToReceivingPlant/PlantName}" />
+                            <Text id="deliveringPlantVal" text="{DeliveringPlantID} - {ToDeliveringPlant/PlantName}" />
+                            <Text id="statusVal" text="{Status}" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </f:content>
+    </f:DynamicPage>
+    <!-- </Page> -->
 </mvc:View>

@@ -1,10 +1,10 @@
-// sap.ui.define([
-//     "sap/ui/core/mvc/Controller"
-// ], (Controller) => {
-//     "use strict";
+sap.ui.define([
+    "sap/ui/core/mvc/Controller"
+], (Controller) => {
+    "use strict";
 
-//     return Controller.extend("sapips.training.ordermanagement.controller.OrderMainView", {
-//         onInit() {
-//         }
-//     });
-// });
+    return Controller.extend("sapips.training.ordermanagement.controller.OrderMainView", {
+        onInit() {
+        }
+    });
+});
