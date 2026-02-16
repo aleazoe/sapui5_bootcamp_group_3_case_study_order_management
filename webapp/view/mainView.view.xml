@@ -1,6 +1,101 @@
-<mvc:View controllerName="com.training.group3ordermanagement.controller.mainView"
+<mvc:View
+    controllerName="com.training.group3ordermanagement.controller.mainView"
     xmlns:mvc="sap.ui.core.mvc"
-    xmlns="sap.m">
-    <Page id="page" title="{i18n>title}">
+    xmlns="sap.m"
+>
+    <Page
+        id="page"
+        title="{i18n>title}"
+    >
+        <!-- START OF TEST -->
+        <!-- FOR TESTING PURPOSE ONLY -->
+        <!-- Simple to see if we could display the mock data in the page -->
+        <Panel
+            id="panelOrders"
+            headerText="Orders"
+        >
+            <List
+                id="listOrders"
+                items="{/Orders}"
+                mode="SingleSelectMaster"
+            >
+                <StandardListItem
+                    id="listItem"
+                    title="{OrderID} | {CreationDate} | {ReceivingPlantID} | {DeliveringPlantID} | {Status}"
+                />
+            </List>
+        </Panel>
+        <Panel
+            id="panelOrderDetails"
+            headerText="Order Details"
+        >
+            <List
+                id="listOrderDetails"
+                items="{/OrderDetails}"
+                mode="SingleSelectMaster"
+            >
+                <StandardListItem
+                    id="listItemDet"
+                    title="{OrderID} | {ProductID} | {Quantity} | {UnitPrice}"
+                />
+            </List>
+        </Panel>
+        <Panel
+            id="panelPlants"
+            headerText="Plant Description"
+        >
+            <List
+                id="listPlantDesc"
+                items="{/Plants}"
+                mode="SingleSelectMaster"
+            >
+                <StandardListItem
+                    id="listItemPlant"
+                    title="{PlantID} | {PlantName}"
+                />
+            </List>
+        </Panel>
+        <!-- FOR TESTING PURPOSE ONLY -->
+        <!-- How to include 2 or more entities in one table/list -->
+        <Table
+            id="orderTable"
+            items="{
+                path: '/Orders',
+                parameters: {
+                expand: 'ToReceivingPlant,ToDeliveringPlant'
+                }
+            }"
+        >
+            <columns>
+                <Column>
+                    <Text text="Order" />
+                </Column>
+                <Column>
+                    <Text text="Receiving Plant" />
+                </Column>
+                <Column>
+                    <Text text="Receiving Plant Desc" />
+                </Column>
+                <Column>
+                    <Text text="Delivering Plant" />
+                </Column>
+                <Column>
+                    <Text text="Delivering Plant Desc" />
+                </Column>
+            </columns>
+
+            <items>
+                <ColumnListItem>
+                    <cells>
+                        <Text text="{OrderID}" />
+                        <Text text="{ReceivingPlantID}" />
+                        <Text text="{ToReceivingPlant/PlantName}" />
+                        <Text text="{DeliveringPlantID}" />
+                        <Text text="{ToDeliveringPlant/PlantName}" />
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+        <!-- END OF TEST -->
     </Page>
 </mvc:View>
