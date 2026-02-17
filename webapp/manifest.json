@@ -14,6 +14,17 @@
       "id": "@sap/generator-fiori:basic",
       "version": "1.20.2",
       "toolsId": "e26e23f3-6fb3-4025-a7eb-f4a8fde3dd52"
+    },
+    "dataSources": {
+      "mainService": {
+        "uri": "/group3/mainService/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "localUri": "localService/mainService/metadata.xml",
+          "odataVersion": "2.0"
+        }
+      }
     }
   },
   "sap.ui": {
@@ -50,6 +61,13 @@
         "type": "sap.ui.model.resource.ResourceModel",
         "settings": {
           "bundleName": "com.training.group3ordermanagement.i18n.i18n"
+        }
+      },
+      "": {
+        "dataSource": "mainService",
+        "preload": true,
+        "settings": {
+          "useBatch": true
         }
       }
     },
