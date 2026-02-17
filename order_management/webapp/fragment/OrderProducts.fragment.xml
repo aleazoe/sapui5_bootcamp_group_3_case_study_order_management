@@ -1,14 +1,17 @@
 <core:FragmentDefinition xmlns="sap.m"
-    xmlns:l="sap.ui.layout"
-    xmlns:f="sap.ui.layout.form"
     xmlns:core="sap.ui.core">
-    <Panel class="sapUiSmallMargin">
-        <Table id="orderDetailsTable" items="{
+    <Panel id="productOrderPanel" class="sapUiTinyMarginTop">
+        <Table id="productOrderTable" items="{
                     path: '/OrderDetails',
                     parameters: {
                         expand: 'ToProduct'
                         }
-                    }" mode="SingleSelectMaster" itemPress=".onPressProductItem" headerText="Product ({/OrderDetails/Counts/Total})" inset="false" width="auto">
+                    }" 
+                    mode="SingleSelectMaster" 
+                    updateFinished=".onProductsUpdateFinished"
+                    headerText="Product" 
+                    inset="false" 
+                    width="auto">
             <columns>
                 <Column id="productIDCol">
                     <Text id="productIDColText" text="Product Name" />
@@ -17,7 +20,7 @@
                     <Text id="qtyColText" text="Quantity" />
                 </Column>
                 <Column id="unitPriceCol">
-                    <Text id="unitPriceColText" text="Price Per Unit" />
+                    <Text id="unitPriceColText" text="Price Per Quantity" />
                 </Column>
                 <Column id="totalPriceCol">
                     <Text id="totalPriceColText" text="Total Price" />

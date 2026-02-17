@@ -1,11 +1,10 @@
-<mvc:View xmlns:cards="sap.f.cards" controllerName="sapips.training.ordermanagement.controller.DetailView"
+<mvc:View controllerName="sapips.training.ordermanagement.controller.DetailView"
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:f="sap.f"
     xmlns="sap.m"
-    xmlns:lf="sap.ui.layout.form"
     xmlns:core="sap.ui.core">
     <f:DynamicPage id="detailDynamicPageId" preserveHeaderStateOnScroll="true" headerExpanded="true" showFooter="true" fitContent="true">
-        <!-- Dynamic Page Title -->
+
         <f:title>
             <f:DynamicPageTitle id="detailPageTitle">
                 <f:heading>
@@ -22,10 +21,10 @@
         </f:content>
         
         <f:footer>
-            <OverflowToolbar >
+            <OverflowToolbar>
                 <ToolbarSpacer />
-                <Button text="Edit" />
-                <Button text="Cancel" />
+                <Button id="editDetailButton" text="Edit" press=".onPressEdit" />
+                <Button id="cancelDetailButton" text="Cancel" press=".onPressCancel" />
             </OverflowToolbar>
         </f:footer>
     </f:DynamicPage>

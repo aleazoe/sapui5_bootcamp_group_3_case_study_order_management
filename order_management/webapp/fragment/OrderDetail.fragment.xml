@@ -1,55 +1,37 @@
-<core:FragmentDefinition
-    xmlns="sap.m"
+<core:FragmentDefinition xmlns="sap.m"
     xmlns:l="sap.ui.layout"
     xmlns:f="sap.ui.layout.form"
-    xmlns:core="sap.ui.core"
->
-   <VBox class="sapUiSmallMargin">
-        <f:SimpleForm
-            id="orderDetailForm"
-            editable="false"
-            layout="ResponsiveGridLayout"
-            title="Order Detail"
-            labelSpanXL="4"
-            labelSpanL="3"
-            labelSpanM="4"
-            labelSpanS="12"
-            adjustLabelSpan="false"
-            emptySpanXL="0"
-            emptySpanL="4"
-            emptySpanM="0"
-            emptySpanS="0"
-            columnsXL="2"
-            columnsL="1"
-            columnsM="1"
-            singleContainerFullSize="false"
-        >
+    xmlns:core="sap.ui.core">
+    <Panel id="orderDetailPanel">
+        <f:SimpleForm id="orderDetailForm" editable="false" layout="ResponsiveGridLayout" title="Order Detail" 
+        labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12" 
+        adjustLabelSpan="false" 
+        emptySpanXL="0" emptySpanL="4" emptySpanM="0" emptySpanS="0" 
+        columnsXL="2" columnsL="1" columnsM="1" 
+        singleContainerFullSize="false">
             <f:content>
-                <Label text="Order Number" />
-                <Text
-                    id="nameText"
-                    text="{OrderID}"
-                />
+                <Label id="orderIdLbl" text="Order Number" />
+                <Text id="orderIdDetailVal" text="{OrderID}" />
 
-                <Label text="Creation Date" />
-                <Text id="creationDateVal" 
+                <Label id="creationDateLbl" text="Creation Date" />
+                <Text id="creationDateDetailVal" 
                     text="{
-                            path: 'CreationDate',
-                            type: 'sap.ui.model.type.Date',
-                            formatOptions: { 
-                                source: { pattern: 'yyyy-MM-dd' },
-                                pattern: 'dd MMM yyyy' }
-                        }" />
+                        path: 'CreationDate',
+                        type: 'sap.ui.model.type.Date',
+                        formatOptions: { 
+                            source: { pattern: 'yyyy-MM-dd' },
+                            pattern: 'dd MMM yyyy' }
+                    }" />
 
-                <Label text="Receiving Plant" />
-                <Text text="{ReceivingPlantID} - {ToReceivingPlant/PlantName}" />
+                <Label id="receivingPlantLbl" text="Receiving Plant" />
+                <Text id="receivingPlantDetailVal" text="{ReceivingPlantID} - {ToReceivingPlant/PlantName}" />
 
-                <Label text="Receiving Plant" />
-                <Text text="{DeliveringPlantID} - {ToDeliveringPlant/PlantName}" />
+                <Label id="deliveringPlantLbl" text="Delivering Plant" />
+                <Text id="deliveringPlantDetailVal" text="{DeliveringPlantID} - {ToDeliveringPlant/PlantName}" />
 
-                <Label text="Status" />
-                <Text text="{Status}" />
+                <Label id="statusLbl" text="Status" />
+                <Text id="statusDetailVal" text="{Status}" />
             </f:content>
         </f:SimpleForm>
-    </VBox>
+    </Panel>
 </core:FragmentDefinition>
