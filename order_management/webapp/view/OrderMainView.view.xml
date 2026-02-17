@@ -3,26 +3,39 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:f="sap.f"
     xmlns="sap.m"
+    xmlns:layout="sap.ui.layout"
 >
-    <!-- <Page id="page" title="{i18n>title}"> -->
     <f:DynamicPage
         id="orderDynamicPageId"
-        preserveHeaderStateOnScroll="true"
+        preserveHeaderStateOnScroll="false"
         headerExpanded="true"
+        toggleHeaderOnTitleClick="false"
         showFooter="false"
         fitContent="true"
     >
-        <!-- Dynamic Page Title -->
-        <f:title>
-            <f:DynamicPageTitle id="orderPageTitle">
-                <f:heading>
-                    <Title
-                        id="orderPageTitleText"
-                        text="{i18n>title}"
-                    />
-                </f:heading>
-            </f:DynamicPageTitle>
-        </f:title>
+        <f:header>
+            <f:DynamicPageHeader id="orderPageHeaderId" pinnable="true">
+                <layout:HorizontalLayout allowWrapping="true">
+						<layout:VerticalLayout class="sapUiMediumMarginEnd">
+                            <Label text="Order Number"/>
+                            <Input id="inputOrderID" value="test" />
+						</layout:VerticalLayout>
+
+						<layout:VerticalLayout>
+							<Label text="Creation Date"/>
+                            <Input id="inputCreationDate" value="test" />
+						</layout:VerticalLayout>
+
+                        <layout:VerticalLayout>
+							<Label text="Status"/>
+                            <Input id="inputStatus" value="test" />
+						</layout:VerticalLayout>
+
+                        <Button id="goButton" text="Go" />
+                        <Button id="clearButton" text="Clear" />
+					</layout:HorizontalLayout>
+            </f:DynamicPageHeader>
+        </f:header>
 
         <f:content>
             <Table
@@ -30,9 +43,11 @@
                 items="{
                 path: '/Orders',
                 parameters: {
-                expand: 'ToReceivingPlant,ToDeliveringPlant'
-                }
-            }"
+                    expand: 'ToReceivingPlant,ToDeliveringPlant'
+                    }
+                }"
+                mode="SingleSelectMaster"
+                itemPress=".onPressOrderItem"
             >
                 <headerToolbar>
                     <OverflowToolbar id="otbTableTitle">
@@ -61,10 +76,17 @@
                 </columns>
 
                 <items>
-                    <ColumnListItem id="orderItems">
+                    <ColumnListItem id="orderItems" type="Active">
                         <cells>
                             <Text id="orderIdVal" text="{OrderID}" />
-                            <Text id="creationDateVal" text="{CreationDate}" />
+                            <Text id="creationDateVal" 
+                                text="{
+                                        path: 'CreationDate',
+                                        type: 'sap.ui.model.type.Date',
+                                        formatOptions: { 
+                                            source: { pattern: 'yyyy-MM-dd' },
+                                            pattern: 'dd MMM yyyy' }
+                                    }" />
                             <Text id="receivingPlantVal" text="{ReceivingPlantID} - {ToReceivingPlant/PlantName}" />
                             <Text id="deliveringPlantVal" text="{DeliveringPlantID} - {ToDeliveringPlant/PlantName}" />
                             <Text id="statusVal" text="{Status}" />
@@ -74,5 +96,4 @@
             </Table>
         </f:content>
     </f:DynamicPage>
-    <!-- </Page> -->
 </mvc:View>

@@ -1,0 +1,30 @@
+<mvc:View
+    controllerName="sapips.training.ordermanagement.controller.EditView"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:f="sap.f"
+    xmlns="sap.m"
+>
+    <f:DynamicPage
+        id="editDynamicPageId"
+        preserveHeaderStateOnScroll="true"
+        headerExpanded="true"
+        showFooter="true"
+        fitContent="true"
+    >
+        <!-- Dynamic Page Title -->
+        <f:title>
+            <f:DynamicPageTitle id="editPageTitle">
+                <f:heading>
+                    <Title
+                        id="editPageTitleText"
+                        text="Edit Order"
+                    />
+                </f:heading>
+            </f:DynamicPageTitle>
+        </f:title>
+
+        <f:content>
+            
+        </f:content>
+    </f:DynamicPage>
+</mvc:View>

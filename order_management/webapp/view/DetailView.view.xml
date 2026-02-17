@@ -1,0 +1,32 @@
+<mvc:View xmlns:cards="sap.f.cards" controllerName="sapips.training.ordermanagement.controller.DetailView"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:f="sap.f"
+    xmlns="sap.m"
+    xmlns:lf="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+    <f:DynamicPage id="detailDynamicPageId" preserveHeaderStateOnScroll="true" headerExpanded="true" showFooter="true" fitContent="true">
+        <!-- Dynamic Page Title -->
+        <f:title>
+            <f:DynamicPageTitle id="detailPageTitle">
+                <f:heading>
+                    <Title id="detailPageTitleText" text="Detail" />
+                </f:heading>
+            </f:DynamicPageTitle>
+        </f:title>
+
+        <f:content>
+            <VBox>
+                <core:Fragment fragmentName="sapips.training.ordermanagement.fragment.OrderDetail" type="XML" />
+                <core:Fragment fragmentName="sapips.training.ordermanagement.fragment.OrderProducts" type="XML" />
+            </VBox>
+        </f:content>
+        
+        <f:footer>
+            <OverflowToolbar >
+                <ToolbarSpacer />
+                <Button text="Edit" />
+                <Button text="Cancel" />
+            </OverflowToolbar>
+        </f:footer>
+    </f:DynamicPage>
+</mvc:View>

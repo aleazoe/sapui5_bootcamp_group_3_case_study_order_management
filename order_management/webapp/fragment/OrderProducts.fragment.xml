@@ -1,0 +1,39 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+    <Panel class="sapUiSmallMargin">
+        <Table id="orderDetailsTable" items="{
+                    path: '/OrderDetails',
+                    parameters: {
+                        expand: 'ToProduct'
+                        }
+                    }" mode="SingleSelectMaster" itemPress=".onPressProductItem" headerText="Product ({/OrderDetails/Counts/Total})" inset="false" width="auto">
+            <columns>
+                <Column id="productIDCol">
+                    <Text id="productIDColText" text="Product Name" />
+                </Column>
+                <Column id="qtyCol">
+                    <Text id="qtyColText" text="Quantity" />
+                </Column>
+                <Column id="unitPriceCol">
+                    <Text id="unitPriceColText" text="Price Per Unit" />
+                </Column>
+                <Column id="totalPriceCol">
+                    <Text id="totalPriceColText" text="Total Price" />
+                </Column>
+            </columns>
+
+            <items>
+                <ColumnListItem id="orderDetailsItems" type="Active" vAlign="Middle">
+                    <cells>
+                        <Text id="productIdVal" text="{ProductID} - {ToProduct/ProductName}" />
+                        <Text id="qtyVal" text="{Quantity}" />
+                        <Text id="unitPriceVal" text="{UnitPrice}" />
+                        <Text id="totalPriceVal" text="{= ${Quantity} * ${UnitPrice}}" />
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </Panel>
+</core:FragmentDefinition>
