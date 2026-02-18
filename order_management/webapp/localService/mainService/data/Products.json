@@ -3,18 +3,18 @@
         "ProductID": "P002",
         "ProductName": "Sony Bravia TV",
         "DeliveringPlantID": 9102,
-        "Unit Price": 30000
+        "UnitPrice": 30000
     },
     {
         "ProductID": "P109",
         "ProductName": "Samsung TV",
         "DeliveringPlantID": 9102,
-        "Unit Price": 50000
+        "UnitPrice": 50000
     },
     {
         "ProductID": "P385",
         "ProductName": "Phillips TV",
         "DeliveringPlantID": 9102,
-        "Unit Price": 35000
+        "UnitPrice": 35000
     }
 ]
