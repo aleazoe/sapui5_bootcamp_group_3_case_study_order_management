@@ -92,17 +92,17 @@
       },
       "routes": [
         {
-          "name": "RoutemainView",
+          "name": "RouteOrderMainPage",
           "pattern": ":?query:",
           "target": [
-            "TargetmainView"
+            "TargetOrderMainPage"
           ]
         }
       ],
       "targets": {
-        "TargetmainView": {
-          "id": "mainView",
-          "name": "mainView"
+        "TargetOrderMainPage": {
+          "id": "OrderMainPage",
+          "name": "OrderMainPage"
         }
       }
     },
