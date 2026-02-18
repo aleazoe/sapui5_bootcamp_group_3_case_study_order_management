@@ -129,6 +129,7 @@
           "viewName": "DetailView"
         },
         "TargetEditPage": {
+          "transition": "show",
           "viewId": "EditView",
           "viewName": "EditView"
         }

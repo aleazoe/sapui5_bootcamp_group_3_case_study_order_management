@@ -2,8 +2,9 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
-    "sap/ui/core/routing/History"
-], (Controller, Filter, FilterOperator, History) => {
+    "sap/ui/core/routing/History",
+    "sap/ui/core/Fragment"
+], (Controller, Filter, FilterOperator, History, Fragment) => {
     "use strict";
 
     return Controller.extend("sapips.training.ordermanagement.controller.DetailView", {
@@ -12,16 +13,10 @@ sap.ui.define([
                 .getRouter()
                 .getRoute("RouteDetailPage")
                 .attachPatternMatched(this._onMatched, this);
-        },
 
-        onProductsUpdateFinished: function (oEvent) {
-            var oTable = oEvent.getSource();
-            var iTotalItems = oTable.getBinding("items").getLength();
-
-            if (typeof iTotalItems === "number") {
-                oTable.setHeaderText("Product (" + iTotalItems + ")");
-            } 
-
+            this.getView().setModel( new sap.ui.model.json.JSONModel({
+                "isEdit": false
+            }), "vm")
         },
 
         onPressEdit: function () {
@@ -46,13 +41,23 @@ sap.ui.define([
             }
         },
 
+        onProductsUpdateFinished: function (oEvent) {
+            var oTableTitle = this.getView().byId("productOrderTableTitle");
+            var iTotalItems = oEvent.getSource().getBinding("items").getLength();
+
+            if (typeof iTotalItems === "number") {
+                oTableTitle.setText("Product (" + iTotalItems + ")");
+            } 
+
+        },
+
         _onMatched: function (oEvent) {
             const sOrderId = oEvent.getParameter("arguments").orderID;
             
             const sPath = "/Orders('" + sOrderId +"')";
 
-            var oForm = this.getView().byId("orderDetailForm");
-            oForm.bindElement({
+            var oPage = this.getView().byId("detailDynamicPageId");
+            oPage.bindElement({
                 path: sPath,
                 parameters: {
                     expand: "ToReceivingPlant,ToDeliveringPlant"
@@ -75,5 +80,7 @@ sap.ui.define([
             var oBindingContext = oTable.getBinding("items");
             oBindingContext.filter(aFilter);
         }
+
+        
     });
 });

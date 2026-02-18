@@ -3,6 +3,7 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns:f="sap.f"
     xmlns="sap.m"
+    xmlns:core="sap.ui.core"
 >
     <f:DynamicPage
         id="editDynamicPageId"
@@ -24,7 +25,18 @@
         </f:title>
 
         <f:content>
-            
+            <VBox>
+                <core:Fragment fragmentName="sapips.training.ordermanagement.fragment.OrderDetail" type="XML" />
+                <core:Fragment fragmentName="sapips.training.ordermanagement.fragment.OrderProducts" type="XML" />
+            </VBox>
         </f:content>
+        
+        <f:footer>
+            <OverflowToolbar>
+                <ToolbarSpacer />
+                <Button id="saveEditButton" type="Emphasized" text="Save" press=".onPressSaveEdit" />
+                <Button id="cancelEditButton" type="Reject" text="Cancel" press=".onPressCancelEdit" />
+            </OverflowToolbar>
+        </f:footer>
     </f:DynamicPage>
 </mvc:View>

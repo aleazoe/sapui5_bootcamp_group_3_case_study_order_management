@@ -7,11 +7,21 @@
                         expand: 'ToProduct'
                         }
                     }" 
-                    mode="SingleSelectMaster" 
+                    mode="{= ${vm>/isEdit} ? 'MultiSelect' : 'None' }"
                     updateFinished=".onProductsUpdateFinished"
-                    headerText="Product" 
+                    selectionChange=".onSelectionChange"
                     inset="false" 
                     width="auto">
+
+            <headerToolbar>
+                <OverflowToolbar >
+                    <Title id="productOrderTableTitle" text="Product (0)" />
+
+                    <ToolbarSpacer />
+                    <Button id="addProductButton" tooltip="Add" icon="sap-icon://add" visible="{vm>/isEdit}" press=".onPressAddProduct"/>
+                    <Button id="delProductButton" tooltip="Delete" icon="sap-icon://delete" visible="{vm>/isEdit}" press=".onPressDeleteProduct"/>
+                </OverflowToolbar>
+            </headerToolbar>
             <columns>
                 <Column id="productIDCol">
                     <Text id="productIDColText" text="Product Name" />
@@ -36,6 +46,7 @@
                         <Text id="totalPriceVal" text="{= ${Quantity} * ${UnitPrice}}" />
                     </cells>
                 </ColumnListItem>
+                
             </items>
         </Table>
     </Panel>
