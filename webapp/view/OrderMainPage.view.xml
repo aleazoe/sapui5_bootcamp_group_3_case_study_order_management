@@ -1,0 +1,115 @@
+<mvc:View controllerName="com.training.group3ordermanagement.controller.OrderMainPage"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+	xmlns:l="sap.ui.layout"
+    xmlns:core="sap.ui.core">
+	<f:DynamicPage id="idOrdrsDynPg" title="{i18n>title}">
+		<f:header>
+			<f:DynamicPageHeader id="idOrdrsDynPgHdr" pinnable="true">
+                <l:HorizontalLayout id="idOrdrsHorLyt" class="sapUiContentPadding">
+                    <!-- Order Number -->
+                    <l:VerticalLayout id="idOrNoVerLyt">
+                        <Label id="idOrdNoLbl" text="{i18n>main.label.OrderNumber}" />
+                        <Input id="idOrdNoInpt" placeholder="{i18n>main.placeholder.OrderNumber}" width="20rem" />
+                    </l:VerticalLayout>
+
+                    <!-- Creation Date -->
+                    <l:VerticalLayout id="idCreDtVerLyt">
+                        <Label id="idCreDtLbl" text="{i18n>main.label.CreationDate}" />
+                        <DateRangeSelection 
+                            id="idCreDtDtRngSel"
+                            showCurrentDateButton="true"
+                            showFooter="true"
+                            placeholder="{i18n>main.placeholder.CreationDate}"
+                            displayFormat="dd MMM yyyy"
+                            width="20rem" />
+                    </l:VerticalLayout>
+
+                    <l:VerticalLayout id="idStatVerLyt">
+                        <Label id="idStatLbl" text="{i18n>main.label.Status}" />
+
+                        <l:HorizontalLayout id="idComBoxBtnHorLyt">
+                            <!-- Status -->
+                            <ComboBox id="idStatusComBox" width="20rem" class="sapUiSmallMarginEnd"
+                                items="{ path: 'status>/Statuses' }">
+                                <core:Item id="idStatusItem" key="{status>key}" text="{status>text}" />
+                            </ComboBox>
+
+                            <!-- Go -->
+                            <Button id="idGoBtn" type="Emphasized" text="{i18n>main.button.Go}" tooltip="{i18n>main.tooltip.Go}" press="onBtnPressApplyFilter" class="sapUiTinyMarginEnd" /> 
+
+                            <!-- Clear -->
+                            <Button id="idClearBtn" type="Transparent" text="{i18n>main.button.Clear}" tooltip="{i18n>main.tooltip.Clear}" press="onBtnPressClearFilter" /> 
+                        </l:HorizontalLayout>
+                    </l:VerticalLayout>
+                </l:HorizontalLayout>
+		    </f:DynamicPageHeader>
+        </f:header>
+
+        <f:content>
+            <Table 
+                id="idOrdersTable"
+                mode="MultiSelect"
+                updateFinished="onOrdersUpdateFinished"
+                items="{
+                    path: '/Orders',
+                    sorter: { path: 'OrderID' },
+                    parameters: { expand: 'ToReceivingPlant,ToDeliveringPlant' }
+                }">
+                <headerToolbar>
+                    <OverflowToolbar id="idOrdersOflowTbar">
+                        <Title id="idOrdersTtl" text="{i18n>main.title.Orders}" level="H2"/>
+                        <ToolbarSpacer id="idTtlBtnTbarSpacer" />
+
+                        <!-- Create -->
+                        <Button id="idCreBtn" icon="sap-icon://add" tooltip="{i18n>main.tooltip.Create}" press="onBtnPressCreateOrder"/>
+
+                        <!-- Delete -->
+                        <Button id="idDelBtn" icon="sap-icon://delete" tooltip="{i18n>main.tooltip.Delete}" press="onBtnPressDeleteOrder"/>
+                    </OverflowToolbar>
+                </headerToolbar>
+                <columns>
+                    <Column id="idOrdrNoCol">
+                        <Text id="idOrdrNoTxt" text="{i18n>main.column.OrderNumber}" />
+                    </Column>
+                    <Column id="idCreDtCol">
+                        <Text id="idCreDtTxt" text="{i18n>main.column.CreationDate}" />
+                    </Column>
+                    <Column id="idRecPlntCol">
+                        <Text id="idRecPlntTxt" text="{i18n>main.column.ReceivingPlant}" />
+                    </Column>
+                    <Column id="idDelPlntCol">
+                        <Text id="idDelPlntTxt" text="{i18n>main.column.DeliveringPlant}" />
+                    </Column>
+                    <Column id="idStatusCol">
+                        <Text id="idStatusTxt" text="{i18n>main.column.Status}" />
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem id="idOrdersColLstItm" type="Navigation" press="onPressOrderItem">
+                        <cells>                       
+                            <Text id="idOrdrNoVal"
+                                text="{OrderID}" />
+                            <Text id="idCreDtVal"
+                                text="{ path: 'CreationDate', 
+                                        formatter: '.formatter.formatCreationDate' }"  />
+                            <Text id="idRecPlntVal"
+                                text="{ parts: [{path: 'ReceivingPlantID'},
+                                                {path: 'ToReceivingPlant/PlantName'}],
+                                        formatter: '.formatter.formatPlant' }" />
+                            <Text id="idDelPlntVal"
+                                text="{ parts: [{path: 'DeliveringPlantID'},
+                                                {path: 'ToDeliveringPlant/PlantName'}],
+                                        formatter: '.formatter.formatPlant' }" />
+                            <ObjectStatus id="idStatusVal"
+                                text="{Status}"
+                                state="{ path: 'Status', 
+                                        formatter: '.formatter.formatStatusColor' }" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </f:content>
+	</f:DynamicPage>
+</mvc:View>
