@@ -1,0 +1,31 @@
+<mvc:View controllerName="com.training.group3ordermanagement.controller.DetailView"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:f="sap.f"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <f:DynamicPage id="detailDynamicPageId" preserveHeaderStateOnScroll="true" headerExpanded="true" showFooter="true" fitContent="true">
+
+        <f:title>
+            <f:DynamicPageTitle id="detailPageTitle">
+                <f:heading>
+                    <Title id="detailPageTitleText" text="Detail" />
+                </f:heading>
+            </f:DynamicPageTitle>
+        </f:title>
+
+        <f:content>
+            <VBox>
+                <core:Fragment fragmentName="com.training.group3ordermanagement.fragment.OrderDetail" type="XML" />
+                <core:Fragment fragmentName="com.training.group3ordermanagement.fragment.OrderProducts" type="XML" />
+            </VBox>
+        </f:content>
+        
+        <f:footer>
+            <OverflowToolbar>
+                <ToolbarSpacer />
+                <Button id="editDetailButton" text="Edit" press=".onPressEdit" />
+                <Button id="cancelDetailButton" text="Cancel" press=".onPressCancel" />
+            </OverflowToolbar>
+        </f:footer>
+    </f:DynamicPage>
+</mvc:View>

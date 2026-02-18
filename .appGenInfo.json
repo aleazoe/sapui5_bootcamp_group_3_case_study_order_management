@@ -1,0 +1,23 @@
+{
+  "generationParameters": {
+    "generationDate": "Wed Feb 11 2026 06:48:51 GMT+0000 (Coordinated Universal Time)",
+    "generatorPlatform": "SAP Business Application Studio",
+    "serviceType": "None",
+    "metadataFilename": "",
+    "serviceUrl": "N/A",
+    "appName": "group3ordermanagement",
+    "appTitle": "Group 3 Order Management",
+    "appDescription": "Group 3 Case Study - Order Management",
+    "appNamespace": "com.training",
+    "ui5Theme": "sap_horizon",
+    "ui5Version": "1.144.1",
+    "enableEslint": false,
+    "enableTypeScript": false,
+    "showMockDataInfo": false,
+    "generatorVersion": "1.20.2",
+    "template": "Basic",
+    "generatorName": "SAP Fiori Application Generator",
+    "entityRelatedConfig": [],
+    "launchText": "To launch the generated application, run the following from the generated application root folder:\n\n```\n    npm start\n```"
+  }
+}
