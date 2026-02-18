@@ -51,6 +51,7 @@
             <Table 
                 id="idOrdersTable"
                 mode="MultiSelect"
+                itemPress=".onPressOrderItem"
                 updateFinished="onOrdersUpdateFinished"
                 items="{
                     path: '/Orders',

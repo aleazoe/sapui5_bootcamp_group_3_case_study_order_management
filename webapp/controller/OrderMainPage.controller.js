@@ -159,6 +159,18 @@ sap.ui.define([
                     }
                 }
             );
+        },
+
+        onPressOrderItem: function (oEvent) {
+            var oItem = oEvent.getParameter("listItem") || oEvent.getSource();
+            var oBindingContext = oItem.getBindingContext();
+            var sOrderId = oBindingContext.getProperty("OrderID");
+
+            var oRouter = this.getOwnerComponent().getRouter();
+
+            oRouter.navTo("RouteDetailPage", {
+                orderID: encodeURIComponent(sOrderId)
+            });
         }
     });
 });
