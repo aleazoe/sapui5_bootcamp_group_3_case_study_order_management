@@ -24,16 +24,14 @@
                                 placeholder="Enter Receiving Plant"
                                 showSuggestion="true"
                                 showValueHelp="true"
-                                valueHelpRequest=".onValueHelpRequest"
-                                suggestionItems="{/PlantID}">
+                                valueHelpRequest=".onValueHelpRequest">
                             </Input>
                             <Label id="idLblLDPlant" text="{i18n>dlvrngPlnt}" required="true"/>
                             <Input id="idInptDplant" value="" 
                                 placeholder="Enter Delivering Plant"
                                 showSuggestion="true"
                                 showValueHelp="true"
-                                valueHelpRequest=".onValueHelpRequest"
-                                suggestionItems="{/PlantID}">
+                                valueHelpRequest=".onValueHelpRequest">
                             </Input>
                         </f:content>
                 </f:SimpleForm>
@@ -71,7 +69,6 @@
                         <Text id="idTotPriceTxt" text="{i18n>create.col.TotPrice}" />
                     </Column>
                 </columns>
-                
                 <items>
                     <ColumnListItem>
                     <cells>
