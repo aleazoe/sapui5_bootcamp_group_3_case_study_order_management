@@ -1,0 +1,90 @@
+<mvc:View 
+    controllerName="com.training.group3ordermanagement.controller.createPage"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:l="sap.ui.layout"
+    xmlns:core="sap.ui.core">
+    <Page id="idCreatePage" title="{i18n>createPage}" floatingFooter="true">
+        <content>
+            <VBox id="idVBox" class="sapUiSmallMargin">
+                <f:SimpleForm 
+                        id="idOrderDetailForm" 
+                        editable="true" 
+                        layout="ResponsiveGridLayout" 
+                        title="{i18n>OrderDetail}" 
+                        labelSpanXL="3" labelSpanL="3" labelSpanM="3" labelSpanS="12" 
+                        adjustLabelSpan="false" 
+                        emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0" 
+                        columnsXL="1" columnsL="1" columnsM="1" 
+                        singleContainerFullSize="false">
+                        <f:content>
+                            <Label id="idLblRPlant" text="{i18n>rcvngPlnt}" required="true"/>
+                            <Input id="idInptRplant" value="" 
+                                placeholder="Enter Receiving Plant"
+                                showSuggestion="true"
+                                showValueHelp="true"
+                                valueHelpRequest=".onValueHelpRequest">
+                            </Input>
+                            <Label id="idLblLDPlant" text="{i18n>dlvrngPlnt}" required="true"/>
+                            <Input id="idInptDplant" value="" 
+                                placeholder="Enter Delivering Plant"
+                                showSuggestion="true"
+                                showValueHelp="true"
+                                valueHelpRequest=".onValueHelpRequest">
+                            </Input>
+                        </f:content>
+                </f:SimpleForm>
+            </VBox>
+            
+            <Table 
+                id="idProductOrdr"
+                mode="MultiSelect"
+                updateFinished="onOrdersUpdateFinished"
+                items="{
+                    path: '/Orders',
+                    sorter: { path: 'OrderID' },
+                    parameters: { expand: 'ToReceivingPlant,ToDeliveringPlant' }
+                }">
+                <headerToolbar>
+                    <OverflowToolbar id="idToolbar">
+                        <Title id="idProductTitle" text="{i18n>create.title.Product}" level="H2"/>
+                        <ToolbarSpacer id="idToolbarSpacer" />
+
+                        <!-- Delete -->
+                        <Button id="idDeleteBtn" icon="sap-icon://delete" tooltip="{i18n>main.tooltip.Delete}" press="onBtnPressDeleteOrder"/>
+                    </OverflowToolbar>
+                </headerToolbar>
+                <columns>
+                    <Column id="idProductNameCol">
+                        <Text id="idProductNameTxt" text="{i18n>create.col.Productname}" />
+                    </Column>
+                    <Column id="idQuantityCol">
+                        <Text id="idQuantityTxt" text="{i18n>create.col.Quantity}" />
+                    </Column>
+                    <Column id="idUnitPriceCol">
+                        <Text id="idUnitPriceTxt" text="{i18n>create.col.UnitPrice}" />
+                    </Column>
+                    <Column id="idTotPriceCol">
+                        <Text id="idTotPriceTxt" text="{i18n>create.col.TotPrice}" />
+                    </Column>
+                </columns>
+                <items>
+                    <ColumnListItem>
+                    <cells>
+                        <Text text="{ProductName}" />
+                        <Text text="{Quantity}" />
+                    </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+        <footer>
+            <OverflowToolbar id="idOFTFooterReview1">
+                <ToolbarSpacer id="idTSpacerFooterReview1"/>
+                <Button id="idBtnSave" text="{i18n>saveBtn}" press="onPressSave"/>
+                <Button id="idBtnCancel" text="{i18n>cancelBtn}" press="onPressCancel"/>
+            </OverflowToolbar>
+        </footer>
+    </Page>
+</mvc:View>

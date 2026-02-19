@@ -2,8 +2,9 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "com/training/group3ordermanagement/model/formatter",
     "sap/ui/model/json/JSONModel",
-    "sap/m/MessageBox"
-], (Controller, formatter, JSONModel, MessageBox) => {
+    "sap/m/MessageBox",
+    "sap/ui/core/routing/History"
+], (Controller, formatter, JSONModel, MessageBox, History) => {
     "use strict";
 
     return Controller.extend("com.training.group3ordermanagement.controller.OrderMainPage", {
@@ -159,6 +160,22 @@ sap.ui.define([
                     }
                 }
             );
+        },
+        /*
+        * This function is called when the Plus Icon (Create Button) is clicked
+        * It navigates to the Create Page
+        **/
+        onBtnPressCreateOrder: function () {
+            var oHistory = History.getInstance();
+            var sPreviousHash = oHistory.getPreviousHash();
+            var oRouter = this.getOwnerComponent().getRouter();
+
+            if (sPreviousHash !== undefined) {
+                window.history.go(-1);
+            } else {
+                // Navigate to Create Page
+                oRouter.navTo("RouteCreatePage", {}, true);
+            }
         }
     });
 });

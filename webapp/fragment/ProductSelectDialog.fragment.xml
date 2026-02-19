@@ -1,0 +1,15 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+  <SelectDialog
+    id="idProductDialog"
+    title="Select Product"
+    items="{products>/list}"
+    search="onSearchProduct"
+    confirm="onConfirmProduct"
+    cancel="onCancelDialog"
+    noDataText="No data">
+    <StandardListItem id="_IDGenStandardListItem"
+      title="{products>productName}"
+      description="{products>productId}"
+      type="Active" />
+  </SelectDialog>
+</core:FragmentDefinition>

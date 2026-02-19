@@ -1,0 +1,19 @@
+<core:FragmentDefinition 
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Dialog id="idCancelDialog" title="{i18n>cancelDialogTitle}">
+        <content>
+            <Text id="_IDCancelText"
+                text="{i18n>cancelText}"
+                wrapping="true"
+                textAlign="Center"/>
+
+        </content>
+        <beginButton>
+            <Button id="idButtonCancelDialog" text="{i18n>yesBtn}" press="onCancelDialog"/>
+        </beginButton>
+        <endButton>
+            <Button id="idButtonCloseDialog2" text="{i18n>noBtn}" press="onCloseDialog"/>
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>

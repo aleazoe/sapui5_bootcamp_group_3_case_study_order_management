@@ -97,12 +97,23 @@
           "target": [
             "TargetOrderMainPage"
           ]
+        },
+        {
+          "name": "RouteCreatePage",
+          "pattern": "create",
+          "target": [
+            "TargetCreatePage"
+          ]
         }
       ],
       "targets": {
         "TargetOrderMainPage": {
           "id": "OrderMainPage",
           "name": "OrderMainPage"
+        },
+        "TargetCreatePage": {
+          "id": "createPage",
+          "name": "createPage"
         }
       }
     },

@@ -1,0 +1,18 @@
+<core:FragmentDefinition 
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Dialog id="idSaveDialog" title="{i18n>saveDialogTitle}">
+        <content>
+            <Text id="_IDSaveText"
+                text="{i18n>saveText}"
+                wrapping="true"
+                textAlign="Center"/>
+        </content>
+        <beginButton>
+            <Button id="idButtonSaveDialog" text="{i18n>dialogSaveButton}" press="onSaveDialog"/>
+        </beginButton>
+        <endButton>
+            <Button id="idButtonCloseDialog" text="{i18n>dialogCloseButton}" press="onCloseDialog"/>
+        </endButton>
+    </Dialog>
+</core:FragmentDefinition>
