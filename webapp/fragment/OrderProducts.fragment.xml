@@ -38,15 +38,14 @@
             </columns>
 
             <items>
-                <ColumnListItem id="orderDetailsItems" type="Active" vAlign="Middle">
+                <ColumnListItem id="orderDetailsItems" type="Active" vAlign="Middle" >
                     <cells>
                         <Text id="productIdVal" text="{ProductID} - {ToProduct/ProductName}" />
-                        <Text id="qtyVal" text="{Quantity}" />
+                        <Text id="qtyVal" text="{Quantity}"/>
                         <Text id="unitPriceVal" text="{UnitPrice}" />
-                        <Text id="totalPriceVal" text="{= ${Quantity} * ${UnitPrice}}" />
+                        <Text id="totalPriceVal" text="{= ${Quantity} * ${UnitPrice}}"/>
                     </cells>
                 </ColumnListItem>
-                
             </items>
         </Table>
     </Panel>

@@ -2,8 +2,11 @@ sap.ui.define([
     "sap/ui/core/mvc/Controller",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
-    "sap/ui/core/Fragment"
-], (Controller, Filter, FilterOperator, Fragment) => {
+    "sap/ui/core/Fragment",
+    "sap/ui/core/routing/History",
+    "sap/m/MessageBox",
+
+], (Controller, Filter, FilterOperator, Fragment, History, MessageBox) => {
     "use strict";
 
     return Controller.extend("com.training.group3ordermanagement.controller.EditView", {
@@ -16,6 +19,13 @@ sap.ui.define([
             this.getView().setModel(new sap.ui.model.json.JSONModel({
                 isEdit: true
             }), "vm")
+
+            var oModel = this.getOwnerComponent().getModel();
+            oModel.setDeferredGroups(["dialogGroup"]);
+            oModel.setChangeGroups({
+                "Products": { groupId: "dialogGroup", changeSetId: "dialogChanges" }
+            });
+
 
         },
 
@@ -49,6 +59,18 @@ sap.ui.define([
             oBindingContext.filter(aFilter);
         },
 
+        onNavBack: function () {
+            var oHistory = History.getInstance();
+            var sPreviousHash = oHistory.getPreviousHash();
+            var oRouter = this.getOwnerComponent().getRouter();
+
+            if (sPreviousHash !== undefined) {
+                window.history.go(-1);
+            } else {
+                oRouter.navTo("DetailView", {}, true);
+            }
+        },
+
         onSelectionChange: function (oEvent) {
             var oTable = oEvent.getSource();
             var oTableTitle = this.getView().byId("productOrderTableTitle");
@@ -70,11 +92,58 @@ sap.ui.define([
             if (s == 'delivered') return 'deliveredKey';
         },
 
+        keyToStatus: function (sKey) {
+            if (!sKey) return "";
+            const s = String(sKey).trim().toLowerCase();
+
+            if (s == 'createdKey') return "Created";
+            if (s == 'releasedKey') return "Released";
+            if (s == 'partialCompleteKey') return "Partially Completed";
+            if (s == 'deliveredKey') return "Delivered";
+        },
+
+        onPressDeleteProduct: function (oEvent) {
+            let oTextBundle = this.getOwnerComponent().getModel("i18n").getResourceBundle();
+            let oTable = this.byId("productOrderTable");
+            let aSelectedItems = oTable.getSelectedItems();
+
+            // No items selected from the table 
+            if (aSelectedItems.length === 0) {
+                MessageBox.error(oTextBundle.getText("message.NoItems"));
+                return;
+            }
+
+            let oModel = this.getOwnerComponent().getModel();
+            let iCount = aSelectedItems.length;
+
+            MessageBox.confirm(
+                (iCount === 1 ? oTextBundle.getText("message.SingleItem", [iCount]) : oTextBundle.getText("message.MultipleItems", [iCount])),
+                {
+                    actions: [MessageBox.Action.YES,
+                    MessageBox.Action.NO],
+
+                    onClose: function (sAction) {
+                        if (sAction === MessageBox.Action.YES) {
+
+                            // Delete selected items
+                            aSelectedItems.forEach(function (oItem) {
+                                let sPath = oItem.getBindingContext().getPath();
+                                // oModel.remove(sPath, { groupId: "dialogGroup" });
+                                oModel.remove(sPath);
+                            });
+
+                            oTable.removeSelections(true);
+                        }
+                    }
+                }
+            );
+        },
+
         onPressAddProduct: function (oEvent) {
             var oView = this.getView();
 
             var oBindingContext = oView.byId("editDynamicPageId").getBindingContext();
-            const iDeliveringPlant = oBindingContext.getProperty("DeliveringPlantID");
+            var iDeliveringPlant = oBindingContext.getProperty("DeliveringPlantID");
 
             if (!this._pDialog) {
                 this._pDialog = Fragment.load({
@@ -144,57 +213,94 @@ sap.ui.define([
         },
 
         onProductDialogConfirm: function (oEvent) {
-            var aContexts = oEvent.getParameter("selectedContexts") || [];
-            if (!aContexts.length) { return; }
+            var aSelectedProducts = oEvent.getParameter("selectedContexts") || [];
+            if (!aSelectedProducts.length) { return; }
 
-            var oModel = this.getView().getModel();
-
-            // Get OrderID from the view binding context
-            // const oOrderCtx = oView.getBindingContext();
-            // const sOrderId = oOrderCtx.getProperty("OrderID");
-            var sOrderId = this._orderId;
+            var oModel = this.getOwnerComponent().getModel();
 
             // Existing rows in the table (avoid duplicates)
-            const oTable = this.getView().byId("productOrderTable");
-            const aExisting = oTable.getItems().map(it => it.getBindingContext().getProperty("ProductID"));
-            const setExisting = new Set(aExisting);
+            var oTable = this.getView().byId("productOrderTable");
+            var oQtyDialog = this.getView().byId("productQtyDialog");
+            var aExisting = oTable.getItems().map(it => it.getBindingContext().getProperty("ProductID"));
+            var setExisting = new Set(aExisting);
 
-            aContexts.forEach(oProdCtx => {
-                const sProductId = oProdCtx.getProperty("ProductID");
-                const fUnitPrice = oProdCtx.getProperty("UnitPrice"); // from Product entity
+            aSelectedProducts.forEach(oProdCtx => {
+                var sProductId = oProdCtx.getProperty("ProductID");
+                var fUnitPrice = oProdCtx.getProperty("UnitPrice"); // from Product entity
+                var iQuantity = oQtyDialog.getValue();
 
                 if (setExisting.has(sProductId)) {
-                    // Option: skip duplicates OR show message
-                    // sap.m.MessageToast.show(`Product ${sProductId} already added`);
+                    // skip duplicates
                     return;
                 }
 
-                // Create a pending OrderDetail entry (not saved yet)
-                oModel.create("/OrderDetails", {
-                    properties: {
-                        OrderID: '012204',
-                        ProductID: sProductId,
-                        Quantity: 0,           // required user input
-                        UnitPrice: fUnitPrice  // optional prefill
-                    },
-                    success: function (data) {},
-                    error: function (data) {}
+                var oProductOrder = {
+                    OrderID: this._orderId,
+                    ProductID: sProductId,
+                    Quantity: iQuantity,
+                    UnitPrice: fUnitPrice
+                }
+
+                oModel.create("/OrderDetails", oProductOrder, { groupId: "dialogGroup" });
+
+            });
+            oTable.getBinding("items").refresh(true);
+
+        },
+
+        onPressSaveEdit: function (oEvent) {
+            const that = this;
+            var oModel = this.getOwnerComponent().getModel();
+            var sOrderId = this._orderId;
+            // oModel.submitChanges({groupId: "dialogGroup"})
+
+            var oForm = this.getView().getModel();
+            var sOrderPath = oForm.createKey("/Orders", {
+                    OrderID: this._orderId
                 });
 
-                // this.getView().byId("productOrderTable").setBindingContext(oEntryCtx);
+            var sStatus = this.keyToStatus(this.getView().byId("statusEditSel").getSelectedKey());
+            oModel.update(sOrderPath, {Status: sStatus}, { groupId: "dialogGroup" });
 
-                // If your table is bound to /OrderDetails, the created entry will appear
-                // once the binding refreshes (often automatic). If not:
-                oTable.getBinding("items").refresh();
+
+            sap.m.MessageBox.confirm("Are you sure you want to save these changes?", {
+                actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
+                onClose: function (sAction) {
+                    if (sAction === sap.m.MessageBox.Action.YES) {
+                        oModel.submitChanges({
+                            groupId: "dialogGroup",
+                            success: () => {
+                                sap.m.MessageBox.success("The Order " + sOrderId + " has been successfully updated",{
+                                    onClose: function () {
+                                        // oModel.update(sOrderPath, {Status: sStatus});
+                                        that.onNavBack();
+                                    }
+                                });
+                            },
+                            error: function () {
+                                sap.m.MessageBox.error("Save failed");
+                            }
+                        });
+                    }
+                }
             });
 
-            // Close and reset search
-            // const oDialog = oEvent.getSource();
-            // oDialog.setSearchValue("");
-            // oDialog.close();
-
-            // Optional: scroll to end and focus the last quantity input
-            // setTimeout(() => this._focusLastQuantityInput(), 0);
         },
+
+        onPressCancelEdit: function (oEvent) {
+            const that = this;
+            var oModel = this.getOwnerComponent().getModel();
+            oModel.resetChanges(["dialogGroup"]); // cancels queued create/update/delete
+
+            sap.m.MessageBox.confirm("Are you sure you want to cancel the changes done in the page?", {
+                actions: [sap.m.MessageBox.Action.YES, sap.m.MessageBox.Action.NO],
+                onClose: function (sAction) {
+                    if (sAction === sap.m.MessageBox.Action.YES) {
+                        oModel.resetChanges(["dialogGroup"]); // cancels queued create/update/delete
+                        that.onNavBack();
+                    }
+                }
+            });
+        }
     });
 });

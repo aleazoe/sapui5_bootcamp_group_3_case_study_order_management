@@ -67,7 +67,7 @@
                 <Select id="statusEditSel" 
                     selectedKey="{
                         path:'Status', 
-                        formatter:'.statusToKey'
+                        formatter:'statusToKey'
                     }" 
                     change=".onStatusChange"
                     visible="{vm>/isEdit}">

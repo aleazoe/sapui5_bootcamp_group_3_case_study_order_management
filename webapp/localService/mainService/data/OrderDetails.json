@@ -10,8 +10,7 @@
         "ProductID": "P109",
         "Quantity": 2,
         "UnitPrice": 50000
-    }
-    ,
+    },
     {
         "OrderID": "012201",
         "ProductID": "P385",
