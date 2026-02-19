@@ -7,6 +7,9 @@ sap.ui.define([
     return UIComponent.extend("com.training.group3ordermanagement.Component", {
         metadata: {
             manifest: "json",
+            config: {
+                fullWidth: true // Set your fullscreen parameter here
+            },
             interfaces: [
                 "sap.ui.core.IAsyncContentCreation"
             ]

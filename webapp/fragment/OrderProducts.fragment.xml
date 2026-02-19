@@ -1,0 +1,52 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+    <Panel id="productOrderPanel" class="sapUiTinyMarginTop">
+        <Table id="productOrderTable" items="{
+                    path: '/OrderDetails',
+                    parameters: {
+                        expand: 'ToProduct'
+                        }
+                    }" 
+                    mode="{= ${vm>/isEdit} ? 'MultiSelect' : 'None' }"
+                    updateFinished=".onProductsUpdateFinished"
+                    selectionChange=".onSelectionChange"
+                    inset="false" 
+                    width="auto">
+
+            <headerToolbar>
+                <OverflowToolbar >
+                    <Title id="productOrderTableTitle" text="Product (0)" />
+
+                    <ToolbarSpacer />
+                    <Button id="addProductButton" tooltip="Add" icon="sap-icon://add" visible="{vm>/isEdit}" press=".onPressAddProduct"/>
+                    <Button id="delProductButton" tooltip="Delete" icon="sap-icon://delete" visible="{vm>/isEdit}" press=".onPressDeleteProduct"/>
+                </OverflowToolbar>
+            </headerToolbar>
+            <columns>
+                <Column id="productIDCol">
+                    <Text id="productIDColText" text="Product Name" />
+                </Column>
+                <Column id="qtyCol">
+                    <Text id="qtyColText" text="Quantity" />
+                </Column>
+                <Column id="unitPriceCol">
+                    <Text id="unitPriceColText" text="Price Per Quantity" />
+                </Column>
+                <Column id="totalPriceCol">
+                    <Text id="totalPriceColText" text="Total Price" />
+                </Column>
+            </columns>
+
+            <items>
+                <ColumnListItem id="orderDetailsItems" type="Active" vAlign="Middle" >
+                    <cells>
+                        <Text id="productIdVal" text="{ProductID} - {ToProduct/ProductName}" />
+                        <Text id="qtyVal" text="{Quantity}"/>
+                        <Text id="unitPriceVal" text="{UnitPrice}" />
+                        <Text id="totalPriceVal" text="{= ${Quantity} * ${UnitPrice}}"/>
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </Panel>
+</core:FragmentDefinition>

@@ -1,0 +1,82 @@
+<core:FragmentDefinition xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+    <Panel id="orderDetailPanel">
+        <f:SimpleForm id="orderDetailForm" editable="true" layout="ResponsiveGridLayout" title="Order Detail" 
+        labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12" 
+        adjustLabelSpan="false" 
+        emptySpanXL="0" emptySpanL="4" emptySpanM="0" emptySpanS="0" 
+        columnsXL="2" columnsL="1" columnsM="1" 
+        singleContainerFullSize="false"
+        visible="{= !${vm>/isEdit} }" >
+            <f:content>
+                <Label id="orderIdLbl" text="Order Number" />
+                <Text id="orderIdDetailText" text="{OrderID}" />
+
+                <Label id="creationDateLbl" text="Creation Date" />
+                <Text id="creationDateDetailText" 
+                    text="{
+                        path: 'CreationDate',
+                        type: 'sap.ui.model.type.Date',
+                        formatOptions: { 
+                            source: { pattern: 'yyyy-MM-dd' },
+                            pattern: 'dd MMM yyyy' }
+                    }" />
+
+                <Label id="receivingPlantLbl" text="Receiving Plant" />
+                <Text id="receivingPlantDetailText" text="{ReceivingPlantID} - {ToReceivingPlant/PlantName}" />
+
+                <Label id="deliveringPlantLbl" text="Delivering Plant" />
+                <Text id="deliveringPlantDetailText" text="{DeliveringPlantID} - {ToDeliveringPlant/PlantName}"/>
+
+                <Label id="statusLbl" text="Status" />
+                <Text id="statusDetailText" text="{Status}" />
+            </f:content>
+        </f:SimpleForm>
+
+        <f:SimpleForm id="orderDetailEditForm" editable="true" layout="ResponsiveGridLayout" title="Order Detail" 
+        labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12" 
+        adjustLabelSpan="false" 
+        emptySpanXL="0" emptySpanL="4" emptySpanM="0" emptySpanS="0" 
+        columnsXL="2" columnsL="1" columnsM="1" 
+        singleContainerFullSize="false"
+        visible="{vm>/isEdit}">
+            <f:content>
+                <Label id="orderIdEditLbl" text="Order Number" />
+                <Input id="orderIdEditInput" value="{OrderID}" editable="false" visible="{vm>/isEdit}" />
+
+                <Label id="creationDateEditLbl" text="Creation Date" />
+                <Input id="creationDateEditInput" editable="false"
+                    value="{
+                        path: 'CreationDate',
+                        type: 'sap.ui.model.type.Date',
+                        formatOptions: { 
+                            source: { pattern: 'yyyy-MM-dd' },
+                            pattern: 'dd MMM yyyy' }
+                    }" 
+                    visible="{vm>/isEdit}"/>
+
+                <Label id="receivingPlantEditLbl" text="Receiving Plant" />
+                <Input id="receivingPlantEditInput" value="{ReceivingPlantID} - {ToReceivingPlant/PlantName}" editable="false" visible="{vm>/isEdit}"/>
+
+                <Label id="deliveringPlantEditLbl" text="Delivering Plant" />
+                <Input id="deliveringPlantEditInput" value="{DeliveringPlantID} - {ToDeliveringPlant/PlantName}" editable="false" visible="{vm>/isEdit}"/>
+
+                <Label id="statusEditLbl" text="Status" />
+                <Select id="statusEditSel" 
+                    selectedKey="{
+                        path:'Status', 
+                        formatter:'statusToKey'
+                    }" 
+                    change=".onStatusChange"
+                    visible="{vm>/isEdit}">
+                    <core:Item id="createdItemId" key="createdKey" text="Created"/>
+                    <core:Item id="releasedItemId" key="releasedKey" text="Released"/>
+                    <core:Item id="partialItemId" key="partialCompleteKey" text="Partially Completed"/>
+                    <core:Item id="deliveredItemId" key="deliveredKey" text="Delivered"/>
+                </Select>
+            </f:content>
+        </f:SimpleForm>
+    </Panel>
+</core:FragmentDefinition>

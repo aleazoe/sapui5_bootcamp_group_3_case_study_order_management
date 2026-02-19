@@ -1,0 +1,26 @@
+<core:FragmentDefinition xmlns="sap.m"
+	xmlns:core="sap.ui.core">
+	<SelectDialog id="productDialogId" noDataText="No Products Found" title="Select Product" search=".onSearchProduct" confirm=".onProductDialogConfirm" cancel=".onDialogClose" items="{
+			path: '/Products',
+			parameters: {
+                        expand: 'ToOrderDetails'
+                        },
+            sorter: {
+                path: 'ProductName'
+            }
+		}">
+
+		<CustomListItem id="productDialogList" type="Active" class="sapUISmallMargin">
+			<HBox justifyContent="SpaceBetween" alignItems="Center" width="100%">
+				<VBox>
+					<Text id="productNameDialog" text="{ProductID} - {ProductName}" />
+				</VBox>
+
+				<!-- Editable Quantity -->
+				<!-- <Input id="productQtyDialog" value="{ToOrderDetails/Quantity}" type="Number" width="4rem"/> -->
+				<Input id="productQtyDialog" value="1" type="Number" width="4rem"/>
+			</HBox>
+		</CustomListItem>
+
+	</SelectDialog>
+</core:FragmentDefinition>
