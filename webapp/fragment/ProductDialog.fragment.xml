@@ -17,6 +17,7 @@
 				</VBox>
 
 				<!-- Editable Quantity -->
+				<!-- <Input id="productQtyDialog" value="{ToOrderDetails/Quantity}" type="Number" width="4rem"/> -->
 				<Input id="productQtyDialog" value="1" type="Number" width="4rem"/>
 			</HBox>
 		</CustomListItem>

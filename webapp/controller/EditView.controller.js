@@ -207,7 +207,7 @@ sap.ui.define([
         },
 
         onDialogClose: function (oEvent) {
-            var aProducts = oEvent.getParameter("selectedContexts");
+            // var aProducts = oEvent.getParameter("selectedContexts");
 
             oEvent.getSource().getBinding("items").filter([]);
         },
@@ -228,6 +228,7 @@ sap.ui.define([
                 var sProductId = oProdCtx.getProperty("ProductID");
                 var fUnitPrice = oProdCtx.getProperty("UnitPrice"); // from Product entity
                 var iQuantity = oQtyDialog.getValue();
+                // var iQuantity = oProdCtx.getProperty("ToOrderDetails/Quantity");
 
                 if (setExisting.has(sProductId)) {
                     // skip duplicates
