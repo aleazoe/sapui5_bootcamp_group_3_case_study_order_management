@@ -54,6 +54,8 @@ sap.ui.define([
                 case "Delivered":
                     // Displayed in green text
                     return "Success";
+                case "Created":
+                    return "Success";
             }
         }
     };
