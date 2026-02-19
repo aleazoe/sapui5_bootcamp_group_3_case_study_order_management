@@ -104,16 +104,45 @@
           "target": [
             "TargetCreatePage"
           ]
+        },
+        {
+          "name": "RouteDetailPage",
+          "pattern": "Detail/{orderID}",
+          "target": [
+            "TargetDetailPage"
+          ]
+        },
+        {
+          "name": "RouteEditPage",
+          "pattern": "Edit/{orderID}",
+          "target": [
+            "TargetEditPage"
+          ]
         }
       ],
       "targets": {
         "TargetOrderMainPage": {
-          "id": "OrderMainPage",
-          "name": "OrderMainPage"
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "OrderMainPage",
+          "viewName": "OrderMainPage"
         },
         "TargetCreatePage": {
           "id": "createPage",
           "name": "createPage"
+        },
+        "TargetDetailPage": {
+          "viewType": "XML",
+          "transition": "slide",
+          "clearControlAggregation": false,
+          "viewId": "DetailView",
+          "viewName": "DetailView"
+        },
+        "TargetEditPage": {
+          "transition": "show",
+          "viewId": "EditView",
+          "viewName": "EditView"
         }
       }
     },
